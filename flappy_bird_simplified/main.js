@@ -81,9 +81,14 @@ var mainState = {
     // Pick where the hole will be
     var hole = Math.floor(Math.random() * 5) + 1;
 
+    if (this.score < 5)
+      var freeSpace = [hole + 1, hole +2]
+    if (this.score >= 5)
+      var freeSpace = [hole +1]
+
     // Add the 6 pipes
     for (var i = 0; i < 8; i++)
-      if (i != hole && i != hole + 1)
+      if (i != hole && freeSpace.indexOf(i) == -1)
           this.addOnePipe(400, i * 60 + 10);
   },
 
