@@ -48,6 +48,9 @@ var mainState = {
     // Score
     this.score = 0;
     this.labelScore = game.add.text(20, 20, "0", { font: "30px Arial", fill: "#ffffff" });
+
+    // change the center of rotation of the bird
+    this.bird.anchor.setTo(-0.2, 0.5);
   },
 
   // This function is called 60 times per second
@@ -59,12 +62,25 @@ var mainState = {
 
     // Restart Game each time the bird collides with a pipe.
     game.physics.arcade.overlap(this.bird, this.pipes, this.restartGame, null, this);
+
+    // When the bird jumps, rotate it upward.
+    if (this.bird.angle < 20)
+      this.bird.angle += 1;
   },
 
   // Make the bird jump
   jump: function() {
     // Add a vertical velocity to the bird
     this.bird.body.velocity.y = -350;
+
+    // Create an animation on the bird
+    var animation = game.add.tween(this.bird);
+
+    // Set the animation to change the angle of the sprite to -20° in 100 milliseconds
+    animation.to({angle: -20}, 100);
+
+    // And start the animation
+    animation.start();
   },
 
   // Restart the game
