@@ -1,5 +1,5 @@
-// Initialize Phaser, and create a 400x490px game
-var game = new Phaser.Game(400, 490, Phaser.AUTO, 'gameDiv');
+// Initialize Phaser, and create a 400x600px game
+var game = new Phaser.Game(400, 600, Phaser.CANVAS, 'gameDiv');
 
 // Create our 'main' state that will contain the game
 var mainState = {
@@ -24,6 +24,13 @@ var mainState = {
   // This function is called after the preload function
   // Here we set up the game, display sprites, etc.
   create: function() {
+
+    //Scaling
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    game.scale.pageAlignHorizontally = true;
+    game.scale.pageAlignVertically = true;
+    game.scale.refresh();
+
     // Set the physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -35,8 +42,9 @@ var mainState = {
     this.bird.body.gravity.y = 1000;
 
     // Call the 'jump' function when the spacekey is hit
-    var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    spaceKey.onDown.add(this.jump, this);
+    // var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    // spaceKey.onDown.add(this.jump, this);
+    this.game.input.onTap.add(this.jump, this);
 
     // Since we are going to handle a lot of pipes in the game,
     // it's easier to use a Phaser feature called 'group'.
@@ -133,7 +141,7 @@ var mainState = {
       var freeSpace = [hole +1]
 
     // Add the 6 pipes
-    for (var i = 0; i < 8; i++)
+    for (var i = 0; i < 10; i++)
       if (i != hole && freeSpace.indexOf(i) == -1)
           this.addOnePipe(400, i * 60 + 10);
   },
